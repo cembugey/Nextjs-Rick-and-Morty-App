@@ -1,0 +1,1 @@
+# Nextjs-Rick-and-Morty-App
