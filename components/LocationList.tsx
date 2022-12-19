@@ -1,5 +1,5 @@
 import LocationItem from "./LocationItem";
-import locationStyles from "../styles/Location.module.scss";
+import locationStyles from "../styles/LocationCard.module.scss";
 import { Location } from "rickmortyapi/dist/interfaces";
 
 interface LocationListProps {
