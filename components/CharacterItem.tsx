@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Character } from "rickmortyapi/dist/interfaces";
+import locationStyles from "../styles/LocationCard.module.scss";
 import Dot from "./Dot";
 
 interface CharacterItemProps {
@@ -11,8 +12,15 @@ const statusColorMap = { Alive: "green", Dead: "red", unknown: "grey" };
 
 const CharacterItem = ({ character }: CharacterItemProps) => {
   return (
-    <div>
-      <div style={{ borderRadius: "20px", overflow: "hidden" }}>
+    <div style={{ width: "200px" }}>
+      <div
+        style={{
+          borderRadius: "20px",
+          overflow: "hidden",
+          width: "200px",
+          height: "200px",
+        }}
+      >
         <Image
           loader={() => character.image}
           src={character.image}
@@ -23,9 +31,11 @@ const CharacterItem = ({ character }: CharacterItemProps) => {
         />
       </div>
       <Link href={`/character/${character.id}`}>
-        <h3 style={{ width: "100%" }}>{character.name}</h3>
+        <h3 className={locationStyles.textContainer} style={{ width: "100%" }}>
+          {character.name}
+        </h3>
       </Link>
-      <div>
+      <div className={locationStyles.textContainer}>
         <Dot color={statusColorMap[character.status]}></Dot>
         {character.status} - {character.species}
       </div>

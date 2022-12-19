@@ -10,7 +10,9 @@ const LocationItem = ({ location }: LocationItemProps) => {
   return (
     <Link href={`/characters/location/${location.id}`}>
       <div className={locationStyles.card}>
-        <h3 style={{ width: "100%" }}>{location.name}</h3>
+        <h3 className={locationStyles.textContainer} style={{ width: "100%" }}>
+          {location.name}
+        </h3>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ width: "40%" }}>
             <span>Type</span>
@@ -19,7 +21,7 @@ const LocationItem = ({ location }: LocationItemProps) => {
             style={{ width: "60%" }}
             className={locationStyles.textContainer}
           >
-            <span className={locationStyles.cardText}>{location.type}</span>
+            <span>{location.type}</span>
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -30,9 +32,7 @@ const LocationItem = ({ location }: LocationItemProps) => {
             style={{ width: "60%" }}
             className={locationStyles.textContainer}
           >
-            <span className={locationStyles.cardText}>
-              {location.dimension}
-            </span>
+            <span>{location.dimension}</span>
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -43,9 +43,7 @@ const LocationItem = ({ location }: LocationItemProps) => {
             style={{ width: "60%" }}
             className={locationStyles.textContainer}
           >
-            <span className={locationStyles.cardText}>
-              {location.residents.length}
-            </span>
+            <span>{location.residents.length}</span>
           </div>
         </div>
       </div>

@@ -20,7 +20,12 @@ const Character = ({ character, otherCharacters }: CharacterProps) => {
       <LargeCharacterItem character={character}></LargeCharacterItem>
       <div
         className={charactersStyles.title}
-        style={{ display: "flex", alignItems: "center", width: "100%" }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          width: "100%",
+          fontSize: 24,
+        }}
       >
         Other Characters
       </div>

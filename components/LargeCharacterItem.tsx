@@ -16,7 +16,14 @@ const LargeCharacterItem = ({ character }: CharacterItemProps) => {
       className={charactersStyles.characterDetail}
       style={{ borderRadius: "20px", overflow: "hidden", width: "300px" }}
     >
-      <div style={{ borderRadius: "20px", overflow: "hidden", width: "300px" }}>
+      <div
+        style={{
+          borderRadius: "20px",
+          overflow: "hidden",
+          width: "300px",
+          height: "300px",
+        }}
+      >
         <Image
           loader={() => character.image}
           src={character.image}
