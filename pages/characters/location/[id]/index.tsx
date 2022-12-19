@@ -2,12 +2,13 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Meta from "../../../../components/Meta";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import CharacterItem from "../../../../components/CharacterItem";
 import Filters from "../../../../components/Filters";
+import Pagination from "../../../../components/Pagination";
 import { GetStaticProps, GetStaticPaths } from "next";
-import { getCharacters } from "rickmortyapi";
-import { Character } from "rickmortyapi/dist/interfaces";
+import { getCharacters, getLocations, getLocation } from "rickmortyapi";
+import { Character, Location } from "rickmortyapi/dist/interfaces";
 
 interface CharacterProps {
   characters: Character[];
@@ -18,6 +19,8 @@ interface Filter {
   color: string;
   isActive: boolean;
 }
+
+const NUMBER_OF_ITEMS_PER_PAGE = 20;
 
 const DEFAULT_FILTERS = [
   {
@@ -38,6 +41,11 @@ const DEFAULT_FILTERS = [
 ];
 
 const Characters = ({ characters }: CharacterProps) => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [numberOfPages, setNumberOfPages] = useState<number>(
+    Math.ceil(characters.length / NUMBER_OF_ITEMS_PER_PAGE)
+  );
+
   const [filters, setFilters] = useState<Filter[]>(DEFAULT_FILTERS);
   const activeFilters = filters.reduce((acc, filter) => {
     if (filter.isActive) {
@@ -46,13 +54,42 @@ const Characters = ({ characters }: CharacterProps) => {
     return acc;
   }, [] as string[]);
 
-  // const router = useRouter()
-  // const { id } = router.query
+  const filteredCharacters = useMemo(() => {
+    return characters.reduce((acc, character) => {
+      if (activeFilters.includes(character.status.toLowerCase())) {
+        return [
+          ...acc,
+          <CharacterItem
+            key={character.id}
+            character={character}
+          ></CharacterItem>,
+        ];
+      }
+      return acc;
+    }, [] as JSX.Element[]);
+  }, [characters, activeFilters]);
+
+  console.log("filteredCharacters.length: ", filteredCharacters.length);
+
+  const charactersToDisplay = filteredCharacters.slice(
+    NUMBER_OF_ITEMS_PER_PAGE * (currentPage - 1),
+    NUMBER_OF_ITEMS_PER_PAGE * currentPage
+  );
+
+  useEffect(() => {
+    setNumberOfPages(
+      Math.ceil(filteredCharacters.length / NUMBER_OF_ITEMS_PER_PAGE)
+    );
+  }, [filteredCharacters]);
 
   return (
     <div>
       {/* <Meta title="Characters" /> */}
-      <Filters filters={filters} setFilters={setFilters}></Filters>
+      <Filters
+        filters={filters}
+        setFilters={setFilters}
+        setNumberOfPages={setNumberOfPages}
+      ></Filters>
       <div
         style={{
           display: "flex",
@@ -62,25 +99,19 @@ const Characters = ({ characters }: CharacterProps) => {
           marginBottom: "6rem",
         }}
       >
-        {characters.reduce((acc, character) => {
-          if (activeFilters.includes(character.status.toLowerCase())) {
-            return [
-              ...acc,
-              <CharacterItem
-                key={character.id}
-                character={character}
-              ></CharacterItem>,
-            ];
-          }
-          return acc;
-        }, [] as JSX.Element[])}
+        {charactersToDisplay}
       </div>
+      <Pagination
+        numberOfPages={numberOfPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      ></Pagination>
     </div>
   );
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const locationId = context.params!.id!.toString();
+  const locationId = context.params!.id!;
   const res = await getCharacters();
 
   const promiseArray = [];
@@ -111,10 +142,27 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await getCharacters();
+  const res = await getLocations();
 
-  const ids = res.data.results!.map((character) => character.id);
-  const paths = ids.map((id) => ({ params: { id: id.toString() } }));
+  const promiseArray = [];
+  for (let i = 1; i <= res.data.info!.pages; i++) {
+    promiseArray.push(getLocations({ page: i }));
+  }
+  // Fetch all locations
+  const allLocations: Location[] = [];
+  await Promise.all(promiseArray)
+    .then((values) => {
+      values.forEach((val) => {
+        allLocations.push(...(val.data.results ?? []));
+      });
+    })
+    .catch((error) => {
+      console.log("error: ", error);
+    });
+
+  const paths = allLocations.map((location) => ({
+    params: { id: location.id.toString() },
+  }));
 
   return {
     paths,

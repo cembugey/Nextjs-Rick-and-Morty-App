@@ -15,9 +15,6 @@ interface CharacterProps {
 }
 
 const Character = ({ character, otherCharacters }: CharacterProps) => {
-  // const router = useRouter()
-  // const { id } = router.query
-
   return (
     <div className={charactersStyles.wrapper}>
       <LargeCharacterItem character={character}></LargeCharacterItem>
@@ -68,8 +65,25 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await getCharacters();
 
-  const ids = res.data.results!.map((character) => character.id);
-  const paths = ids.map((id) => ({ params: { id: id.toString() } }));
+  const promiseArray = [];
+  for (let i = 1; i <= res.data.info!.pages; i++) {
+    promiseArray.push(getCharacters({ page: i }));
+  }
+  // Fetch all characters
+  const allCharacters: CharacterType[] = [];
+  await Promise.all(promiseArray)
+    .then((values) => {
+      values.forEach((val) => {
+        allCharacters.push(...(val.data.results ?? []));
+      });
+    })
+    .catch((error) => {
+      console.log("error: ", error);
+    });
+
+  const paths = allCharacters.map((character) => ({
+    params: { id: character.id.toString() },
+  }));
 
   return {
     paths,
