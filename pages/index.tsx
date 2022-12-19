@@ -1,6 +1,7 @@
 // import Head from "next/head";
 // import Image from "next/image";
 import LocationList from "../components/LocationList";
+import Pagination from "../components/Pagination";
 import { getLocations } from "rickmortyapi";
 import { Location } from "rickmortyapi/dist/interfaces";
 import { useState, useEffect } from "react";
@@ -22,6 +23,11 @@ export default function Home() {
   return (
     <>
       <LocationList locations={locations} />
+      <Pagination
+        numberOfPages={numberOfPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      ></Pagination>
     </>
   );
 }

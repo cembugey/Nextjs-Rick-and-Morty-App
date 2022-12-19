@@ -1,0 +1,36 @@
+.wrapper {
+  margin: 2rem auto 4rem auto;
+  // display: block;
+  // width: 960px;
+}
+
+.pagination {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+
+  li {
+    display: inline;
+
+    span {
+      display: inline-block;
+      text-decoration: none;
+      padding: 8px;
+      height: 40px;
+      width: 40px;
+      color: #000;
+      border-radius: 50%;
+      text-align: center;
+      -webkit-transition: background-color 0.3s;
+      transition: background-color 0.3s;
+      cursor: pointer;
+    }
+    span.active {
+      background-color: #ccc;
+      // color: #fff;
+    }
+    // span:hover:not(.active) {
+    //   background-color: #ddd;
+    // }
+  }
+}
