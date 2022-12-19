@@ -1,18 +1,12 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
+import headerStyles from "../styles/Header.module.scss";
 
 const Header = () => {
   const router = useRouter();
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        position: "relative",
-        marginTop: "50px",
-      }}
-    >
+    <div className={headerStyles.header}>
       {router.route !== "/" && (
         <span
           style={{ position: "absolute", left: "15px" }}

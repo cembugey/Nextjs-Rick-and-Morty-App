@@ -81,20 +81,31 @@ const Characters = ({ characters }: CharacterProps) => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const locationId = context.params!.id!.toString();
-  //   console.log("locationId: ", locationId);
-
   const res = await getCharacters();
+
+  const promiseArray = [];
+  for (let i = 1; i <= res.data.info!.pages; i++) {
+    promiseArray.push(getCharacters({ page: i }));
+  }
+  const allCharactersForSelectedLocation: Character[] = [];
+  await Promise.all(promiseArray)
+    .then((values) => {
+      values.forEach((val) => {
+        allCharactersForSelectedLocation.push(
+          ...(val.data.results ?? []).filter(
+            (char) =>
+              char.location.url.split("location/").slice(-1)[0] === locationId
+          )
+        );
+      });
+    })
+    .catch((error) => {
+      console.log("error: ", error);
+    });
 
   return {
     props: {
-      characters: res.data.results!.filter((character) => {
-        // console.log("character.name: ", character.name);
-        // console.log(
-        //   "character.location.url.split(/).slice(-1): ",
-        //   character.location.url
-        // );
-        return character.location.url.split("/").slice(-1)[0] === locationId;
-      }),
+      characters: allCharactersForSelectedLocation,
     },
   };
 };
