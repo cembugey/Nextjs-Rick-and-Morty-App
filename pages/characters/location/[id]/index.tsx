@@ -5,6 +5,7 @@ import Pagination from "../../../../components/Pagination";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { getCharacters, getLocations, getLocation } from "rickmortyapi";
 import { Character, Location } from "rickmortyapi/dist/interfaces";
+import charactersStyles from "../../../../styles/Characters.module.scss";
 
 interface CharacterProps {
   characters: Character[];
@@ -102,15 +103,7 @@ const Characters = ({ characters }: CharacterProps) => {
     <div>
       {/* <Meta title="Characters" /> */}
       <Filters filters={filters} setFilters={setFilters}></Filters>
-      <div
-        style={{
-          display: "flex",
-          gap: 40,
-          flexWrap: "wrap",
-          marginTop: "3rem",
-          marginBottom: "6rem",
-        }}
-      >
+      <div className={charactersStyles.characterList}>
         {charactersToDisplay}
       </div>
       <Pagination

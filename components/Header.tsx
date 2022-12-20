@@ -9,7 +9,7 @@ const Header = () => {
     <div className={headerStyles.header}>
       {router.route !== "/" && (
         <span
-          style={{ position: "absolute", left: "15px", cursor: "pointer" }}
+          style={{ position: "absolute", left: "5px", cursor: "pointer" }}
           onClick={() => router.back()}
         >
           <svg

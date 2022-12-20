@@ -8,8 +8,8 @@ interface LocationItemProps {
 
 const LocationItem = ({ location }: LocationItemProps) => {
   return (
-    <Link href={`/characters/location/${location.id}`}>
-      <div className={locationStyles.card}>
+    <div className={locationStyles.card}>
+      <Link href={`/characters/location/${location.id}`}>
         <h3 className={locationStyles.textContainer} style={{ width: "100%" }}>
           {location.name}
         </h3>
@@ -46,8 +46,8 @@ const LocationItem = ({ location }: LocationItemProps) => {
             <span>{location.residents.length}</span>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 

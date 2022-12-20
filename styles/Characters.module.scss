@@ -7,9 +7,28 @@
 }
 
 .characterDetail {
-  grid-row-end: span 6;
+  grid-row-end: span 5;
+}
+
+.characterList {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+  margin-bottom: 6rem;
 }
 
 .title {
   grid-column: 2 / -1;
+}
+
+@media (max-width: 500px) {
+  .characterList {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+  }
 }

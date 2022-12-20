@@ -38,9 +38,7 @@ const LargeCharacterItem = ({ character }: CharacterItemProps) => {
           height={300}
         />
       </div>
-      <Link href={`/character/${character.id}`}>
-        <h3 style={{ width: "100%" }}>{character.name}</h3>
-      </Link>
+      <h3 style={{ width: "100%" }}>{character.name}</h3>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div>
           <Dot color={statusColorMap[character.status]}></Dot>

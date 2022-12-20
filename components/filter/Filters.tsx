@@ -21,9 +21,9 @@ interface FilterProps {
 
 const Filter = ({ filters, setFilters }: FilterProps) => {
   return (
-    <>
+    <div>
       <p>Filter by status:</p>
-      <div style={{ display: "flex", gap: 10 }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
         {filters.map((filter) => (
           <FilterTag
             key={filter.text}
@@ -35,7 +35,7 @@ const Filter = ({ filters, setFilters }: FilterProps) => {
           ></FilterTag>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
