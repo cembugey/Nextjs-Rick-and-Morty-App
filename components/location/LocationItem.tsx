@@ -1,5 +1,5 @@
 import Link from "next/link";
-import locationStyles from "../styles/LocationCard.module.scss";
+import locationStyles from "../../styles/LocationCard.module.scss";
 import { Location } from "rickmortyapi/dist/interfaces";
 
 interface LocationItemProps {

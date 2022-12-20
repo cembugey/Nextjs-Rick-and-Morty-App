@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Character } from "rickmortyapi/dist/interfaces";
-import locationStyles from "../styles/LocationCard.module.scss";
+import locationStyles from "../../styles/LocationCard.module.scss";
 
 interface CharacterItemProps {
   character: Character;

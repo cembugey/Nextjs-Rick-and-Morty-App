@@ -1,14 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Character } from "rickmortyapi/dist/interfaces";
-import charactersStyles from "../styles/Characters.module.scss";
-import Dot from "./Dot";
+import charactersStyles from "../../styles/Characters.module.scss";
+import Dot from "../Dot";
 
 interface CharacterItemProps {
   character: Character;
 }
 
-const statusColorMap = { Alive: "green", Dead: "red", unknown: "grey" };
+const statusColorMap = {
+  Alive: "#81ba5b",
+  Dead: "#ad150a",
+  unknown: "#8b8c89",
+};
 
 const LargeCharacterItem = ({ character }: CharacterItemProps) => {
   return (

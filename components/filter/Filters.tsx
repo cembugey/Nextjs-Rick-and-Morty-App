@@ -1,9 +1,16 @@
 import FilterTag from "./FilterTag";
 import { Dispatch, SetStateAction } from "react";
 
+interface Color {
+  activeColor: string;
+  hoveredColor: string;
+  pressedColor: string;
+  passiveColor: string;
+}
+
 interface Filter {
   text: string;
-  color: string;
+  color: Color;
   isActive: boolean;
 }
 

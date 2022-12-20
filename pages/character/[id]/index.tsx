@@ -1,9 +1,5 @@
-// import { server } from '../../../config'
-import Link from "next/link";
-import { useRouter } from "next/router";
-import Meta from "../../../components/Meta";
-import MiniCharacterItem from "../../../components/MiniCharacterItem";
-import LargeCharacterItem from "../../../components/LargeCharacterItem";
+import MiniCharacterItem from "../../../components/character/MiniCharacterItem";
+import LargeCharacterItem from "../../../components/character/LargeCharacterItem";
 import charactersStyles from "../../../styles/Characters.module.scss";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { getCharacter, getCharacters } from "rickmortyapi";
@@ -39,7 +35,6 @@ const Character = ({ character, otherCharacters }: CharacterProps) => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const characterId = parseInt(context.params!.id as string);
   const res = await getCharacter(characterId);
-  // console.log("res: ", res);
   const resAllCharacters = await getCharacters();
 
   const promiseArray = [];
@@ -58,7 +53,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     .catch((error) => {
       console.log("error: ", error);
     });
-  // console.log("otherCharacters ", otherCharacters);
   return {
     props: {
       character: res.data,

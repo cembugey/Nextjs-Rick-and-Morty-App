@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Meta from "../../../../components/Meta";
 import { useState, useEffect, useMemo } from "react";
-import CharacterItem from "../../../../components/CharacterItem";
-import Filters from "../../../../components/Filters";
+import CharacterItem from "../../../../components/character/CharacterItem";
+import Filters from "../../../../components/filter/Filters";
 import Pagination from "../../../../components/Pagination";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { getCharacters, getLocations, getLocation } from "rickmortyapi";
@@ -14,28 +14,54 @@ interface CharacterProps {
   characters: Character[];
 }
 
+interface Color {
+  activeColor: string;
+  hoveredColor: string;
+  pressedColor: string;
+  passiveColor: string;
+}
+
 interface Filter {
   text: string;
-  color: string;
+  color: Color;
   isActive: boolean;
 }
 
 const NUMBER_OF_ITEMS_PER_PAGE = 20;
 
+// dangerdot: #7d0d05
+// alivedot: #81ba5b
+// unknowndot: #8b8c89
+
 const DEFAULT_FILTERS = [
   {
     text: "Dead",
-    color: "red",
+    color: {
+      activeColor: "#ad150a",
+      hoveredColor: "#c28f8c",
+      pressedColor: "#9e4a46",
+      passiveColor: "#d19f9d",
+    },
     isActive: true,
   },
   {
     text: "Alive",
-    color: "green",
+    color: {
+      activeColor: "#81ba5b",
+      hoveredColor: "#bddea9",
+      pressedColor: "#87ad6f",
+      passiveColor: "#c6deb8",
+    },
     isActive: true,
   },
   {
     text: "Unknown",
-    color: "grey",
+    color: {
+      activeColor: "#8b8c89",
+      hoveredColor: "#cccfc8",
+      pressedColor: "#afb3ab",
+      passiveColor: "#d5d6d4",
+    },
     isActive: true,
   },
 ];
@@ -69,8 +95,6 @@ const Characters = ({ characters }: CharacterProps) => {
     }, [] as JSX.Element[]);
   }, [characters, activeFilters]);
 
-  console.log("filteredCharacters.length: ", filteredCharacters.length);
-
   const charactersToDisplay = filteredCharacters.slice(
     NUMBER_OF_ITEMS_PER_PAGE * (currentPage - 1),
     NUMBER_OF_ITEMS_PER_PAGE * currentPage
@@ -85,11 +109,7 @@ const Characters = ({ characters }: CharacterProps) => {
   return (
     <div>
       {/* <Meta title="Characters" /> */}
-      <Filters
-        filters={filters}
-        setFilters={setFilters}
-        setNumberOfPages={setNumberOfPages}
-      ></Filters>
+      <Filters filters={filters} setFilters={setFilters}></Filters>
       <div
         style={{
           display: "flex",
