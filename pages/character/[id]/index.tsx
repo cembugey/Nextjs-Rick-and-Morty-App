@@ -35,18 +35,23 @@ const Character = ({ character, otherCharacters }: CharacterProps) => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const characterId = parseInt(context.params!.id as string);
   const res = await getCharacter(characterId);
-  const resAllCharacters = await getCharacters();
+  const status = res.data.status;
+  const locationName = res.data.location.name;
+  const resAllCharacters = await getCharacters({ status });
 
   const promiseArray = [];
   for (let i = 1; i <= resAllCharacters.data.info!.pages; i++) {
-    promiseArray.push(getCharacters({ page: i }));
+    promiseArray.push(getCharacters({ status, page: i }));
   }
   const otherCharacters: CharacterType[] = [];
   await Promise.all(promiseArray)
     .then((values) => {
       values.forEach((val) => {
         otherCharacters.push(
-          ...(val.data.results?.filter((char) => char.id !== characterId) ?? [])
+          ...(val.data.results?.filter(
+            (char) =>
+              char.id !== characterId && char.location.name === locationName
+          ) ?? [])
         );
       });
     })
