@@ -34,8 +34,12 @@ const MiniCharacterItem = ({ character }: CharacterItemProps) => {
         <div className={locationStyles.textContainer}>
           {character.location.name}
         </div>
-        <div className={locationStyles.textContainer}>
-          {character.species} - {character.gender}
+        <div
+          className={locationStyles.textContainer}
+          style={{ fontStyle: "italic", color: "grey", margin: 0 }}
+        >
+          {character.species ? `${character.species} - ` : ""}
+          {character.gender}
         </div>
       </div>
     </div>

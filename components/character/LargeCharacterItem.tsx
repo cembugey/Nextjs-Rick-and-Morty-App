@@ -46,8 +46,9 @@ const LargeCharacterItem = ({ character }: CharacterItemProps) => {
           <Dot color={statusColorMap[character.status]}></Dot>
           {character.status} - {character.species}
         </div>
-        <p>
-          {character.type} - {character.gender}
+        <p style={{ fontStyle: "italic", color: "grey", margin: 0 }}>
+          {character.type ? `${character.type} - ` : ""}
+          {character.gender}
         </p>
       </div>
       <p>{character.location.name}</p>
