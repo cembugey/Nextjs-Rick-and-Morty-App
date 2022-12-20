@@ -1,7 +1,5 @@
 .wrapper {
   margin: 2rem auto 4rem auto;
-  // display: block;
-  // width: 960px;
 }
 
 .pagination {
@@ -27,10 +25,6 @@
     }
     span.active {
       background-color: #ccc;
-      // color: #fff;
     }
-    // span:hover:not(.active) {
-    //   background-color: #ddd;
-    // }
   }
 }

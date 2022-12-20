@@ -1,7 +1,3 @@
-// import { server } from '../../../config'
-import Link from "next/link";
-import { useRouter } from "next/router";
-import Meta from "../../../../components/Meta";
 import { useState, useEffect, useMemo } from "react";
 import CharacterItem from "../../../../components/character/CharacterItem";
 import Filters from "../../../../components/filter/Filters";
@@ -28,10 +24,6 @@ interface Filter {
 }
 
 const NUMBER_OF_ITEMS_PER_PAGE = 20;
-
-// dangerdot: #7d0d05
-// alivedot: #81ba5b
-// unknowndot: #8b8c89
 
 const DEFAULT_FILTERS = [
   {

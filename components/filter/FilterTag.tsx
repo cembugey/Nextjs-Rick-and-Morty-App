@@ -47,7 +47,6 @@ const FilterTag = ({
     <span
       className={isActive ? tagtyles.active : tagtyles.disabled}
       style={{
-        // color: borderAndDotColor,
         backgroundColor,
         borderColor: borderAndDotColor,
       }}

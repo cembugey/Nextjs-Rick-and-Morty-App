@@ -1,5 +1,5 @@
 import paginationStyles from "../styles/Pagination.module.scss";
-import { useState, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 interface PaginationProps {
   numberOfPages: number;

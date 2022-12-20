@@ -1,5 +1,3 @@
-// import Head from "next/head";
-// import Image from "next/image";
 import LocationList from "../components/location/LocationList";
 import Pagination from "../components/Pagination";
 import { getLocations } from "rickmortyapi";
